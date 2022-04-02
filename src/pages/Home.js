@@ -167,7 +167,7 @@ function Home() {
         {priceTime && priceTime.toLocaleTimeString()}
       </div>
       <div className="portfolio">
-        {portfolio}
+        Portfolio: {portfolio}
       </div>
       <div className="chart">
         <Chart options={chart.options} series={series} type="line" width="100%" height={320} />
