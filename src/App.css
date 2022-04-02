@@ -1,0 +1,10 @@
+.App {
+  text-align: center;
+  background-color: #282c34;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.App-logo {
+  height: 10vmin;
+  pointer-events: none;
+}

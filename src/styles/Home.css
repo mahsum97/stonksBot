@@ -1,0 +1,21 @@
+
+body {
+    background-color: #282c34;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.ticker {
+    font-size: 8.0vmin;
+    text-align: center;
+  }
+  
+  .price {
+    font-size: 10.0vmin;
+    text-align: center;
+  }
+  
+  .price-time {
+    font-size: 6.0vmin;
+    text-align: center;
+  }
+
