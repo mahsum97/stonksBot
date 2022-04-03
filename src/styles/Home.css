@@ -7,22 +7,28 @@ body {
 .ticker {
     font-size: 8.0vmin;
     text-align: center;
+    color: white;
+
   }
   
   .price {
     font-size: 10.0vmin;
     text-align: center;
+    color: white;
   }
   
   .price-time {
     font-size: 6.0vmin;
     text-align: center;
+    color: white;
+
   }
 
 .portfolio {
   font-size: 4.0vmin;
   margin-top: 2%;
   text-align: center;
+  color: white;
 
 }
 

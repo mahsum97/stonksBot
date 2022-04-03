@@ -1,7 +1,10 @@
 import Chart from 'react-apexcharts';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import "../styles/Home.css"
 import React from 'react'
+
+const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
+var googleFinance = require('google-finance');
 
 const chart = {
     options: {
@@ -47,41 +50,40 @@ const chart = {
       
     }
   };
-
+ 
 const round = (number) => {
     return number ? +(number.toFixed(2)) : null;
   };
   
-  function CustomChart(sumQuotes, totalChart) {
+  function CustomChart (combine) {
 
     const [series, setSeries] = useState([{
         data: []
       }]);
-      const [price, setPrice] = useState(-1);
-      const [prevPrice, setPrevPrice] = useState(-1);
-      const [priceTime, setPriceTime] = useState(null);
-      const [totalValue, setTotalValue] = useState(0);
-      const [portfolio, setPortfolio] =  useState([]);
 
     useEffect(() => {
         let timeoutId;
-        
+        googleFinance.historical({
+          symbol: 'NASDAQ:AAPL',
+          from: '2014-01-01',
+          to: '2014-12-31'
+        }, function (err, quotes) {
+          console.log(err + " " + quotes);
+        });
     async function getLatestPrice() {
         try {
-          const gme = totalChart.chart.result[0];
-          setPrevPrice(price);
-          setPrice(price);
-          setPriceTime(new Date(gme.meta.regularMarketTime * 1000));
+          const gme = combine.customchart.current.gme;
+
           const prices = gme.timestamp.map((timestamp, index) => ({
             x: new Date(timestamp * 1000),
-            y: [sumQuotes[index]].map(round)
+            y: [combine.customchart.current.quote[index]].map(round)
           }));
           setSeries([{
             data: prices,
           }]);
           console.log("DONE");
         } catch (error) {
-          console.log(error + "ERRRRRR " + totalChart.chart.result[0]);
+          console.log(error);
         }
         timeoutId = setTimeout(getLatestPrice, 2000 * 2);
     
