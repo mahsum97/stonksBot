@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import "../styles/Home.css"
 import React from 'react'
 
-const proxyUrl = 'https://cors-anywhere.herokuapp.com/'
-var googleFinance = require('google-finance');
 
 const chart = {
     options: {
@@ -63,13 +61,7 @@ const round = (number) => {
 
     useEffect(() => {
         let timeoutId;
-        googleFinance.historical({
-          symbol: 'NASDAQ:AAPL',
-          from: '2014-01-01',
-          to: '2014-12-31'
-        }, function (err, quotes) {
-          console.log(err + " " + quotes);
-        });
+        
     async function getLatestPrice() {
         try {
           const gme = combine.customchart.current.gme;

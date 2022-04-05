@@ -2,10 +2,14 @@ import React, { useRef } from 'react'
 import "../styles/Home.css"
 import CustomChart from '../component/CustomChart';
 import { useEffect, useState } from 'react';
+import stonksList from '../values/stonksList.json'
+import axios from "axios"
 
 
 const stonksUrl = 'https://yahoo-finance-api.vercel.app/';
 const stonks = ['GOOG', 'GME', 'AAPL']
+
+let stonk;
 
 function Home() {
     
@@ -25,9 +29,41 @@ function Home() {
     let dataPrices = [];
     let sumQuotes = [];
     let newQuotes = [];
-    var positionList = Object.freeze([2, 1, 1]);
+    var positionList = Object.freeze([2, 1, 1, 1]);
     let positionValue;
+    let bought = false;
+    checkTime();
     
+    function checkTime(){
+      let dateTime = new Date()
+      if(!bought){
+        let stock = stonksList[Math.floor(Math.random() * stonksList.length)]
+        getStockPrice(stock, 1, dateTime)
+        stonks.push(stock)
+        bought = true
+        console.log("BIN DA")
+
+      }
+      if (dateTime.getHours() === '08' && dateTime.getMinutes() === '51') {
+        bought = false
+      }
+      timeoutId = setTimeout(checkTime, 2000 * 2);
+    }
+
+    async function getStockPrice(symbol, count, timestamp) {
+      let data = await fetch(stonksUrl + symbol);
+      let dataJson = await data.json();
+      let stockPrice = dataJson.chart.result[0].meta.regularMarketPrice.toFixed(2);
+      const newStock = {
+        stock: symbol,
+        price: stockPrice
+      }
+
+      axios.post('http://localhost:3001/create', newStock)
+      
+      console.log("ESADASD: " + newStock)
+    }
+
 
     function getPortFolio() {
       let portArray = []
